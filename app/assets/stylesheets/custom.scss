@@ -29,6 +29,8 @@ $body-color: $black;
 $body-bg: $off-white;
 $primary: $blue;
 $secondary: $dark-gray;
+$min-contrast-ratio: 4;
+$input-bg: white;
 
 // Import Bootstrap Styles
 
@@ -37,7 +39,15 @@ $secondary: $dark-gray;
 // Custom CSS
 
 .content {
-  @extend .container !optional;
+  @extend .container;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 // Header and Nav
@@ -48,7 +58,7 @@ header {
   margin-bottom: 3rem;
 
   nav {
-    @extend .navbar, .navbar-expand-md !optional;
+    @extend .navbar, .navbar-expand-md;
 
     img {
       height: 50px;
@@ -60,47 +70,55 @@ header {
     }
 
     a.button {
-      @extend .btn, .btn-outline-secondary !optional;
+      @extend .btn, .btn-outline-secondary;
     }
 
     ul {
-      @extend .nav, .navbar-nav !optional;
+      @extend .nav, .navbar-nav;
       letter-spacing: 1px;
 
       &.left {
-        @extend .mr-auto !optional;
+        @extend .me-auto;
       }
 
       &.right {
-        @extend .ml-auto !optional;
+        @extend .ms-auto;
       }
 
       li {
-        @extend .nav-item !optional;
+        @extend .nav-item;
         font-size: 1.1rem;
         margin-right: 5px;
 
         a {
-          @extend .nav-link !optional;
+          @extend .nav-link;
+          color: $secondary-link-color;
           padding-bottom: 1px;
         }
 
         a:hover:not(.button),
         a.active {
           color: $off-white;
+          text-decoration: none;
           border-bottom: 1px solid $off-white;
         }
 
-        .button {
+        .button,
+        button {
           margin-right: 10px;
           color: $off-white;
           border-color: $off-white;
         }
 
-        .button:hover {
+        .button:hover,
+        button:hover {
           background: $off-white;
           color: $primary;
           border-color: $primary;
+        }
+
+        button {
+          @extend .btn, .btn-outline-secondary;
         }
       }
     }
@@ -110,7 +128,7 @@ header {
 // Movies Index Page
 
 section.movie {
-  @extend .row !optional;
+  @extend .row;
   margin-bottom: 1.5rem;
   padding-bottom: 1em;
   border-bottom: 1px dotted $border-color;
@@ -120,7 +138,7 @@ section.movie {
   }
 
   .image {
-    @extend .col-md-3, .text-center !optional;
+    @extend .col-md-3, .text-center;
     img {
       width: 100px;
       box-shadow: $box-shadow;
@@ -128,7 +146,7 @@ section.movie {
   }
 
   .summary {
-    @extend .col-md-9, .text-left !optional;
+    @extend .col-md-9, .text-start;
   }
 
   h2 {
@@ -155,10 +173,10 @@ section.movie {
 // Movie Show Page
 
 section.movie-details {
-  @extend .row !optional;
+  @extend .row;
 
   .image {
-    @extend .col-md-3, .text-left !optional;
+    @extend .col-md-3, .text-start;
 
     input[type="submit"] {
       margin-top: 1rem;
@@ -166,11 +184,11 @@ section.movie-details {
   }
 
   .details {
-    @extend .col-md-7, .text-left;
+    @extend .col-md-7, .text-start;
   }
 
   aside {
-    @extend .col-md-2 !optional;
+    @extend .col-md-2;
   }
 
   h1 {
@@ -200,21 +218,17 @@ section.movie-details {
   }
 
   .faves {
-    @extend .input-group !optional;
+    @extend .input-group;
     margin-top: 1rem;
 
-    form {
-      @extend .input-group-prepend !optional;
-    }
-
     .count {
-      @extend .input-group-append, .input-group-text !optional;
+      @extend .input-group-text;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
     }
 
-    input[type="submit"] {
-      @extend .btn, .btn-outline-secondary !optional;
+    button[type="submit"] {
+      @extend .btn, .btn-outline-secondary;
       border-color: #cdd3d8;
       border-right: none;
       border-top-right-radius: 0;
@@ -235,7 +249,7 @@ section.movie-details {
   }
 
   a.review {
-    @extend .btn, .btn-success !optional;
+    @extend .btn, .btn-success;
     letter-spacing: 1px;
     text-transform: uppercase;
     margin-top: 1rem;
@@ -278,27 +292,27 @@ section.user {
     margin-top: 1rem;
 
     .button {
-      @extend .btn, .btn-sm !optional;
+      @extend .btn, .btn-sm;
 
       &.edit {
-        @extend .btn-outline-secondary !optional;
+        @extend .btn-outline-secondary;
       }
 
       &.delete {
-        @extend .btn-danger !optional;
+        @extend .btn-danger;
       }
     }
   }
 
   .review {
-    @extend .row !optional;
+    @extend .row;
     margin: 1rem 0;
     border-radius: 0.3rem;
     border: 1px solid $border-color;
     padding: 1rem;
 
     .details {
-      @extend .col-md-12, .text-left !optional;
+      @extend .col-md-12, .text-start;
 
       .title {
         font-size: 1.15rem;
@@ -353,7 +367,7 @@ ul.reviews {
     }
 
     .button {
-      @extend .btn, .btn-sm, .btn-outline-danger !optional;
+      @extend .btn, .btn-sm, .btn-outline-danger;
       margin-left: 0.5rem;
     }
   }
@@ -383,8 +397,8 @@ section.admin {
     padding-top: 0;
   }
 
-  a.button {
-    @extend .btn, .btn-secondary !optional;
+  a.button, button {
+    @extend .btn, .btn-secondary;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
@@ -419,11 +433,16 @@ aside {
 
 // Forms
 
+form.button_to {
+  display: inline;
+}
+
 form:not([class="button_to"]) {
-  max-width: 400px;
+  max-width: 503px;
   margin-top: 1.5rem;
 
   label {
+    @extend .form-label;
     font-size: 1.1rem;
     font-weight: 600;
     display: block;
@@ -432,30 +451,34 @@ form:not([class="button_to"]) {
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="submit"]),
   textarea,
   select:not(.date) {
-    @extend .form-control !optional;
+    @extend .form-control;
     margin-bottom: 0.75rem;
     width: 100%;
     height: 100%;
   }
 
   select.date {
+    @extend .form-select;
+    width: auto;
     display: inline-block;
     margin-bottom: 0.75rem;
   }
 
   input[type="submit"] {
-    @extend .btn, .btn-primary, .btn-block !optional;
+    @extend .btn, .btn-primary;
+    display: block;
+    width: 100%;
     margin-top: 1.5rem;
   }
 
   input[type="checkbox"] {
-    @extend .form-check-input !optional;
+    @extend .form-check-input;
     width: 20px;
     height: 20px;
   }
 
   input[type="checkbox"] + label {
-    @extend .form-check-label !optional;
+    @extend .form-check-label;
     padding-left: 0.5rem;
     margin-bottom: 0.5rem;
   }
@@ -473,7 +496,6 @@ form:not([class="button_to"]) {
   }
 
   input[type="file"] {
-    @extend .form-control-file !optional;
     margin-bottom: 0.75rem;
     width: 100%;
   }
@@ -483,7 +505,7 @@ form:not([class="button_to"]) {
   }
 
   .checkboxes {
-    @extend .form-check !optional;
+    @extend .form-check;
     margin-top: 1.5rem;
   }
 
@@ -503,17 +525,17 @@ form:not([class="button_to"]) {
 // Flashes
 
 .flash {
-  @extend .alert !optional;
+  @extend .alert;
   text-align: center;
   margin-top: -1rem;
   margin-bottom: 2rem;
 
   &.notice {
-    @extend .alert-success !optional;
+    @extend .alert-success;
   }
 
   &.alert {
-    @extend .alert-danger !optional;
+    @extend .alert-danger;
   }
 }
 
